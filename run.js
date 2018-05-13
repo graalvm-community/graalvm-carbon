@@ -25,28 +25,55 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+var fs = require('fs');
+var vm = require('vm');
 
-var base_dir = '';
-load(base_dir + 'base.js');
-load(base_dir + 'richards.js');
-load(base_dir + 'deltablue.js');
-load(base_dir + 'crypto.js');
-load(base_dir + 'raytrace.js');
-load(base_dir + 'earley-boyer.js');
-load(base_dir + 'regexp.js');
-load(base_dir + 'splay.js');
-load(base_dir + 'navier-stokes.js');
-load(base_dir + 'pdfjs.js');
-load(base_dir + 'mandreel.js');
-load(base_dir + 'gbemu-part1.js');
-load(base_dir + 'gbemu-part2.js');
-load(base_dir + 'code-load.js');
-load(base_dir + 'box2d.js');
-load(base_dir + 'zlib.js');
-load(base_dir + 'zlib-data.js');
-load(base_dir + 'typescript.js');
-load(base_dir + 'typescript-input.js');
-load(base_dir + 'typescript-compiler.js');
+var include = function(filename) {
+	var includeInThisContext = function(path) {
+		var code = fs.readFileSync(path);
+		vm.runInThisContext(code, path); 
+	} .bind(this); 
+	includeInThisContext(__dirname+"/"+filename);
+}
+global.include = include;
+
+var print = function(msg) {
+	console.log(msg);
+}
+global.print = print;
+
+print ("Welcome to GraalVM Carbon JS benchmark suite!");
+
+var includes = [
+	"base.js",
+	"richards.js",
+	"deltablue.js",
+	"crypto.js",
+	"raytrace.js",
+	"earley-boyer.js",
+	"regexp.js",
+	"splay.js",
+	"navier-stokes.js",
+	"pdfjs.js",
+	"mandreel.js",
+	"gbemu-part1.js",
+	"gbemu-part2.js",
+	"code-load.js",
+	"box2d.js",
+	"zlib.js",
+	"zlib-data-fixed.js",
+	"typescript.js",
+	"typescript-input.js",
+	"typescript-compiler.js"
+];
+
+print("Loading benchmarks...");
+for (var i = 0; i < includes.length; i++) {
+	print("- " + includes[i]);
+    include(includes[i]);
+}
+print("Loading benchmarks - done.");
+
 
 var success = true;
 
@@ -64,7 +91,7 @@ function PrintError(name, error) {
 function PrintScore(score) {
   if (success) {
     print('----');
-    print('Score (version ' + BenchmarkSuite.version + '): ' + score);
+    print('Speed (version ' + BenchmarkSuite.version + '): ' + score);
   }
 }
 
@@ -72,6 +99,7 @@ function PrintScore(score) {
 BenchmarkSuite.config.doWarmup = undefined;
 BenchmarkSuite.config.doDeterministic = undefined;
 
+print("Running suites...")
 BenchmarkSuite.RunSuites({ NotifyResult: PrintResult,
                            NotifyError: PrintError,
                            NotifyScore: PrintScore });
