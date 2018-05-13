@@ -42,7 +42,22 @@ var print = function(msg) {
 }
 global.print = print;
 
-print ("Welcome to GraalVM Carbon JS benchmark suite!");
+var printhr = function() {
+	print('----');
+}
+
+var printh = function(msg) {
+	print(msg)
+	print('===');
+}
+
+var printhx = function(msg) {
+	print('===');
+	print(msg)
+	print('===');
+}
+
+printh("Welcome to GraalVM Carbon JS benchmark suite!");
 
 var includes = [
 	"base.js",
@@ -61,18 +76,18 @@ var includes = [
 	"code-load.js",
 	"box2d.js",
 	"zlib.js",
-	"zlib-data-fixed.js",
+	"zlib-data.js",
 	"typescript.js",
 	"typescript-input.js",
 	"typescript-compiler.js"
 ];
 
-print("Loading benchmarks...");
+printh("Loading benchmarks...");
 for (var i = 0; i < includes.length; i++) {
 	print("- " + includes[i]);
     include(includes[i]);
 }
-print("Loading benchmarks - done.");
+printhx("Loading benchmarks - done.");
 
 
 var success = true;
@@ -90,7 +105,7 @@ function PrintError(name, error) {
 
 function PrintScore(score) {
   if (success) {
-    print('----');
+    printhr();
     print('Speed (version ' + BenchmarkSuite.version + '): ' + score);
   }
 }
@@ -99,7 +114,7 @@ function PrintScore(score) {
 BenchmarkSuite.config.doWarmup = undefined;
 BenchmarkSuite.config.doDeterministic = undefined;
 
-print("Running suites...")
+printh("Running suites...")
 BenchmarkSuite.RunSuites({ NotifyResult: PrintResult,
                            NotifyError: PrintError,
                            NotifyScore: PrintScore });
