@@ -322,17 +322,27 @@ BenchmarkSuite.prototype.RunSingleBenchmark = function(benchmark, data) {
   if (data == null) {
     var min_runs = 0;
     var min_elapsed = 30000;
-    temp_data = { runs: 0, elapsed: 0.0 };
+    var temp_data = { runs: 0, elapsed: 0 };
+
+    var prev_elapsed = 0;
+    var curr_elapsed = 0;
+    var elapsed_show_gap = 30;
+
     while (temp_data.runs < min_runs || 
           temp_data.elapsed < min_elapsed) {
 
-        clearline();
-        printe("[warmup: " + benchmark.name +", ");
-        printe("runs: "+temp_data.runs+" / " + min_runs + ", ");
-        printe("elapsed: "+temp_data.elapsed+" / " + min_elapsed + " ");
-        printe("]");
+        if (0 == prev_elapsed || 
+          (curr_elapsed - prev_elapsed) >  elapsed_show_gap) {
+          clearline();
+          printe("[warmup: " + benchmark.name +", ");
+          printe("runs: "+temp_data.runs+" / " + min_runs + ", ");
+          printe("elapsed: "+temp_data.elapsed+" / " + min_elapsed + " ");
+          printe("]");
+      }
 
-        teamp_data = Measure(temp_data);
+        temp_data = Measure(temp_data);
+        prev_elapsed = curr_elapsed;
+        curr_elapsed = temp_data.elapsed;
     }
     clearline();
 
