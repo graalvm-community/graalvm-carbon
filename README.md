@@ -1,9 +1,9 @@
-# Octane
+# GraalVM Carbon
 
-Octane 2.0 is a benchmark that measures a JavaScript engine’s performance by running a suite of tests representative of certain use cases in JavaScript applications.
+GraalVM Carbon is a benchmark that measures GraalVM JavaScript engine’s (Graal.js) performance by running a suite of tests representative of certain use cases in JavaScript applications.
 
-Please note that [Octane is retired](https://v8project.blogspot.com/2017/04/retiring-octane.html) and no longer maintained.
+### History
 
-[Run Octane 2 now!](http://chromium.github.io/octane/)
+Originally it was based on Octane 2.0 sources for V8. Please note that [Octane is retired](https://v8project.blogspot.com/2017/04/retiring-octane.html) and no longer maintained. Also, it was intended for in-browser tests, but Carbon is intended for server-side tests.
 
-For more information, check out the [homepage](https://developers.google.com/octane/), [benchmark reference](https://developers.google.com/octane/benchmark), or [FAQ](https://developers.google.com/octane/faq).
+For legacy information, check out the [Octane homepage](https://developers.google.com/octane/), [benchmark reference](https://developers.google.com/octane/benchmark), or [FAQ](https://developers.google.com/octane/faq).

@@ -1,5 +1,9 @@
 #History
 
+##13/05/2018 - GraalVM Carbon v.1
+
+Octane revived to be used as Graal.js benchmark.
+
 ##11/6/2013 - Octane 2.0
 
 This update adds latency and asm.js-like tests to the Octane benchmark suite.
