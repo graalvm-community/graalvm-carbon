@@ -96,7 +96,7 @@ BenchmarkSuite.suites = [];
 // Scores are not comparable across versions. Bump the version if
 // you're making changes that will affect that scores, e.g. if you add
 // a new benchmark or change an existing one.
-BenchmarkSuite.version = '9';
+BenchmarkSuite.version = 'carbon-1';
 
 
 // Defines global benchsuite running mode that overrides benchmark suite 
@@ -311,6 +311,7 @@ BenchmarkSuite.prototype.RunSingleBenchmark = function(benchmark, data) {
       data.runs += i;
       data.elapsed += elapsed;
     }
+    return data;
   }
 
   // Sets up data in order to skip or not the warmup phase.
@@ -319,7 +320,22 @@ BenchmarkSuite.prototype.RunSingleBenchmark = function(benchmark, data) {
   }
 
   if (data == null) {
-    Measure(null);
+    var min_runs = 0;
+    var min_elapsed = 30000;
+    temp_data = { runs: 0, elapsed: 0.0 };
+    while (temp_data.runs < min_runs || 
+          temp_data.elapsed < min_elapsed) {
+
+        clearline();
+        printe("[warmup: " + benchmark.name +", ");
+        printe("runs: "+temp_data.runs+" / " + min_runs + ", ");
+        printe("elapsed: "+temp_data.elapsed+" / " + min_elapsed + " ");
+        printe("]");
+
+        teamp_data = Measure(temp_data);
+    }
+    clearline();
+
     return { runs: 0, elapsed: 0 };
   } else {
     Measure(data);

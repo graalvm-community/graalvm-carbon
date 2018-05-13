@@ -42,6 +42,17 @@ var print = function(msg) {
 }
 global.print = print;
 
+var printe = function(msg) {
+	process.stdout.write(msg);
+}
+global.printe = printe;
+
+var clearline = function() {
+	process.stdout.clearLine(); 
+    process.stdout.cursorTo(0); 
+}
+global.clearline = clearline;
+
 var printhr = function() {
 	print('----');
 }
@@ -111,8 +122,8 @@ function PrintScore(score) {
 }
 
 
-BenchmarkSuite.config.doWarmup = undefined;
-BenchmarkSuite.config.doDeterministic = undefined;
+BenchmarkSuite.config.doWarmup = true;
+BenchmarkSuite.config.doDeterministic = true;
 
 printh("Running suites...")
 BenchmarkSuite.RunSuites({ NotifyResult: PrintResult,
